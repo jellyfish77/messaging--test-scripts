@@ -3,10 +3,13 @@
 # Run with: python3 test-subscriber.py <params>
 #
 # Examples:
-#   python3 test-subscriber.py --broker 127.17.0.3 --port 1883 --clientid sub-01 --qos 1 --cleansession false --topic test/topic2
+#   python3 mqtt-subscriber.py --broker 127.17.0.3 --port 1883 --clientid sub-01 --qos 1 --cleansession false --topic test/topic2
 #   
+# Windows Terminal:
+#   py ./mqtt-subscriber.py --broker localhost --port 1884 --clientid sub-01 --qos 1 --cleansession false --topic test/in
+#
 # For help:
-#   python3 test-subscriber.py -h 
+#   python3 mqtt-subscriber.py -h 
 #     
 #    
 #########################################################
@@ -38,6 +41,8 @@ parser.add_argument('--cleansession', help='')
 parser.add_argument('--topic', help='')
 args=parser.parse_args()
 
+print(args)
+
 keepalive=1200
 r_messages=[]
 
@@ -58,14 +63,11 @@ def on_message(subscribing_client, userdata, message):
     print(m)
     r_messages.append(msg)
 
-def pub(client,topic,msg,qos,p_msg):
-    logging.info(p_msg + " publishing " + msg + " to topic="+topic +" with qos="+str(qos))
-    client.publish(topic,msg,qos)
-    
 def sub(client,topic,qos,s_msg):
-    logging.info(s_msg+" subscribing to topic="+topic +" with qos="+str(qos))
-    client.subscribe(topic,qos)   
-    
+    m=s_msg+" subscribing to topic="+topic +" with qos="+str(qos)
+    #logging.info(m)
+    print(m)	
+    client.subscribe(topic,qos)       
 
 print(sys.argv[1] + " " + sys.argv[2] + " " + sys.argv[3] + " " + sys.argv[4] + " " + sys.argv[5] + " " + sys.argv[6])
 
@@ -77,7 +79,7 @@ subscribing_client.on_connect=on_connect
 subscribing_client.on_disconnect=on_disconnect                
 
 print("Connecting with CLEAN_SESSION=",args.cleansession)
-subscribing_client.connect(args.broker,int(args.port),keepalive); 
+subscribing_client.connect(args.broker,int(args.port),keepalive)
 subscribing_client.loop_start()
 sub(subscribing_client, args.topic, int(args.qos), args.clientid)
 #time.sleep(3)                      # subscribe for x seconds then stop, or...

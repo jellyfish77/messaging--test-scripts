@@ -65,8 +65,8 @@ def on_message(subscribing_client, userdata, message):
 
 def sub(client,topic,qos,s_msg):
     m=s_msg+" subscribing to topic="+topic +" with qos="+str(qos)
-    #logging.info(m)
-    print(m)	
+    logging.info(m)
+    #print(m)	
     client.subscribe(topic,qos)       
 
 print(sys.argv[1] + " " + sys.argv[2] + " " + sys.argv[3] + " " + sys.argv[4] + " " + sys.argv[5] + " " + sys.argv[6])

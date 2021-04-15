@@ -3,13 +3,13 @@
 # Run with: python3 test-subscriber.py <params>
 #
 # Examples:
-#   python3 mqtt-subscriber.py --broker 127.17.0.3 --port 1883 --clientid sub-01 --qos 1 --cleansession false --topic test/topic2
+#   python3 mqtt_subscriber.py --broker 127.17.0.3 --port 1883 --clientid py-sub-01 --qos 1 --cleansession false --topic test/topic2
 #   
 # Windows Terminal:
-#   py ./mqtt-subscriber.py --broker localhost --port 1884 --clientid sub-01 --qos 1 --cleansession false --topic test/in
+#   py ./mqtt_subscriber.py --broker localhost --port 1884 --clientid py-sub-01 --qos 1 --cleansession false --topic test/in
 #
 # For help:
-#   python3 mqtt-subscriber.py -h 
+#   python3 mqtt_subscriber.py -h 
 #     
 #    
 #########################################################

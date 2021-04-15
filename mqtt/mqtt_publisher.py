@@ -3,14 +3,14 @@
 # Examples:
 #   
 #   Linux:
-#     python3 mqtt-publisher.py --broker 172.17.0.4 --port 1883 --client pub-01 --qos 1 --nummsgs 10000 --topic test/topic2
-#     python3 mqtt-publisher.py --broker 172.17.0.5 --port 1883 --clientid pub-01 --qos 1 --nummsgs 1 --topic test --message "{\"field\":\"blah\"}"
+#     python3 mqtt_publisher.py --broker 172.17.0.4 --port 1883 --client py-pub-01 --qos 1 --nummsgs 10000 --topic test/topic2
+#     python3 mqtt_publisher.py --broker 172.17.0.5 --port 1883 --clientid py-pub-01 --qos 1 --nummsgs 1 --topic test --message "{\"field\":\"blah\"}"
 #
 #   Windows Terminal:
-#     py .\mqtt_publisher.py --broker localhost --port 1884 --client pub-01 --qos 1 --nummsgs 10000 --topic test/in
+#     py .\mqtt_publisher.py --broker localhost --port 1884 --client py-pub-01 --qos 1 --nummsgs 10000 --topic test/in
 #
 # Help:
-#   python3 mqtt-publisher.py -h
+#   python3 mqtt_publisher.py -h
 #    
 #########################################################
 

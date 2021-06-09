@@ -1,7 +1,7 @@
 #########################################################
 #
 # Examples:
-#   
+#
 #   Linux:
 #     python3 mqtt_publisher.py --broker 172.17.0.4 --port 1883 --client py-pub-01 --qos 1 --nummsgs 10000 --topic test/topic2
 #     python3 mqtt_publisher.py --broker 172.17.0.5 --port 1883 --clientid py-pub-01 --qos 1 --nummsgs 1 --topic test --message "{\"field\":\"blah\"}"
@@ -11,7 +11,7 @@
 #
 # Help:
 #   python3 mqtt_publisher.py -h
-#    
+#
 #########################################################
 
 import sys
@@ -49,8 +49,8 @@ def on_connect(client, userdata, flags, rc):
     m="Connected flags"+str(flags)+"result code: " + str(rc) + ", subscribing_client_id: " + str(client)
     print(m)
 
-# Called when a message that was to be sent using the publish() call has completed transmission to the broker. 
-# For messages with QoS levels 1 and 2, this means that the appropriate handshakes have completed. 
+# Called when a message that was to be sent using the publish() call has completed transmission to the broker.
+# For messages with QoS levels 1 and 2, this means that the appropriate handshakes have completed.
 # For QoS 0, this simply means that the message has left the client.
 def on_publish(client, userdata, mid):
     m="Broker ack received, result code: " + str(userdata) + "; subscribing_client_id: " + str(mid)
@@ -64,33 +64,35 @@ def pub(client,topic,msg,qos,p_msg):
     ret=client.publish(topic, msg, qos)
     logging.info('Publish result: ' + str(ret))
 
-publishing_client = mqtt.Client(args.clientid)    #create new instance 
+publishing_client = mqtt.Client(args.clientid)    #create new instance
 
 # attache callback functions
-publishing_client.on_connect=on_connect               
-publishing_client.on_publish=on_publish      
-publishing_client.on_disconnect=on_disconnect       
+publishing_client.on_connect=on_connect
+publishing_client.on_publish=on_publish
+publishing_client.on_disconnect=on_disconnect
 
 logging.info("Connecting...")
 publishing_client.connect(args.broker, int(args.port), keepalive)      #connect to broker
 # run a thread in background to handle the network connection and sending/receiving data
-publishing_client.loop_start()  
+publishing_client.loop_start()
 
 print("Publishing +" + str(int(args.nummsgs)) + " messages...")
 
 for x in range(1, int(args.nummsgs)+1):
-  pub_ack=False  
-  
+  pub_ack=False
+
   if not args.message:
     message="Message "+str(x)
   else:
     message=args.message
+    
+  #time.sleep(.33) # siumlate speed of client (3/sec)
   
   pub(publishing_client, args.topic, message, int(args.qos), args.clientid)
   while pub_ack != True:
-    time.sleep(.01) # takes a non-zero amount of time to get the ACK back for QoS > 0 (on_publish called)    
+    #time.sleep(.01) # takes a non-zero amount of time to get the ACK back for QoS > 0 (on_publish called)
     pass
 
 publishing_client.disconnect() # disconnect from broker
-publishing_client.loop_stop()  
+publishing_client.loop_stop()
 print("Done")

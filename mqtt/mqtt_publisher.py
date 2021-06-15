@@ -3,8 +3,8 @@
 # Examples:
 #
 #   Linux:
-#     python3 mqtt_publisher.py --broker 172.17.0.4 --port 1883 --client py-pub-01 --qos 1 --nummsgs 10000 --topic test/topic2
-#     python3 mqtt_publisher.py --broker 172.17.0.5 --port 1883 --clientid py-pub-01 --qos 1 --nummsgs 1 --topic test --message "{\"field\":\"blah\"}"
+#     python3 mqtt_publisher.py --broker localhost --port 1884 --client py-pub-01 --qos 1 --nummsgs 5000 --delay 1 --topic sometopic
+#     python3 mqtt_publisher.py --broker localhost --port 1883 --clientid py-pub-01 --qos 1 --nummsgs 1 --topic test --message "{\"field\":\"blah\"}"
 #
 #   Windows Terminal:
 #     py .\mqtt_publisher.py --broker localhost --port 1884 --client py-pub-01 --qos 1 --nummsgs 10000 --topic test/in
@@ -19,6 +19,8 @@ import paho.mqtt.client as mqtt  #import the subscribing_client
 import time
 import logging,sys
 import argparse
+import datetime
+
 
 #broker="iot.eclipse.org"
 #broker="broker.hivemq.com"
@@ -31,6 +33,7 @@ parser.add_argument('--port', help='MQTT Broker Port')
 parser.add_argument('--clientid', help='')
 parser.add_argument('--qos', help='')
 parser.add_argument('--nummsgs', help='')
+parser.add_argument('--delay', help='Delay between publishing messages in seconds')
 parser.add_argument('--cleansession', help='')
 parser.add_argument('--topic', help='')
 parser.add_argument('--message', help='Custom message to send to topic')
@@ -38,6 +41,11 @@ args=parser.parse_args()
 
 logging.basicConfig(level=logging.DEBUG)
 #use DEBUG,INFO,WARNING
+
+logging.basicConfig(
+    format='%(asctime)s %(levelname)-8s %(message)s',
+    level=logging.INFO,
+    datefmt='%Y-%m-%d %H:%M:%S')
 
 print(args)
 
@@ -60,7 +68,7 @@ def on_publish(client, userdata, mid):
     pass
 
 def pub(client,topic,msg,qos,p_msg):
-    logging.info(p_msg + " publishing " + msg + " to topic="+topic +" with qos="+str(qos))
+    logging.info(datetime.datetime.now().strftime("%d.%b %Y %H:%M:%S") + " " + p_msg + " publishing " + msg + " to topic="+topic +" with qos="+str(qos))
     ret=client.publish(topic, msg, qos)
     logging.info('Publish result: ' + str(ret))
 
@@ -86,7 +94,7 @@ for x in range(1, int(args.nummsgs)+1):
   else:
     message=args.message
     
-  #time.sleep(.33) # siumlate speed of client (3/sec)
+  time.sleep(float(args.delay)) # siumlate speed of client (3/sec)
   
   pub(publishing_client, args.topic, message, int(args.qos), args.clientid)
   while pub_ack != True:

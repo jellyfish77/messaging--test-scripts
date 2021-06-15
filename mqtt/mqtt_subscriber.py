@@ -2,8 +2,15 @@
 #
 # Run with: python3 test-subscriber.py <params>
 #
+# NOTES: 
+#    - I had weird issues using ipaddress of local docker containers. Seems to work okay using localhost:port. This seemed to 
+#      impact subscriber only.
+#    - If you subscribe to a particular topic, any messages waiting for the client id on previously subscribed topics will also
+#      be delivered
+# 
+#
 # Examples:
-#   python3 mqtt_subscriber.py --broker 127.17.0.3 --port 1883 --clientid py-sub-01 --qos 1 --cleansession false --topic test/topic2
+#   python3 mqtt_subscriber.py --broker localhost --port 1884 --clientid py-sub-01 --qos 1 --cleansession false --topic test/topic
 #   
 # Windows Terminal:
 #   py ./mqtt_subscriber.py --broker localhost --port 1884 --clientid py-sub-01 --qos 1 --cleansession false --topic test/in

@@ -2,14 +2,29 @@
 #
 # Examples:
 #
+#   Parameter examples:
+#
+#    --broker localhost --port 1884 --clientid py-pub-01 --qos 1 --nummsgs 5000 --delay 0 --topic sometopic
+#
+#
+#    Linux Message:
+#       --message "{\"field\":\"blah\"}"
+	
+#    Windows message:
+#       --message "{\""value\"":\""blah\""}"
+#
 #   Linux:
-#     python3 mqtt_publisher.py --broker localhost --port 1884 --client py-pub-01 --qos 1 --nummsgs 5000 --delay 1 --topic sometopic
-#     python3 mqtt_publisher.py --broker localhost --port 1883 --clientid py-pub-01 --qos 1 --nummsgs 1 --topic test --message "{\"field\":\"blah\"}"
+#
+#     python3 mqtt_publisher.py <params>
+#
 #
 #   Windows Terminal:
-#     py .\mqtt_publisher.py --broker localhost --port 1884 --client py-pub-01 --qos 1 --nummsgs 10000 --topic test/in
+#
+#     py .\mqtt_publisher.py <params>
+#     or use "python"
 #
 # Help:
+#
 #   python3 mqtt_publisher.py -h
 #
 #########################################################
